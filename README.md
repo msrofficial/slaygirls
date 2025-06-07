@@ -24,7 +24,7 @@ Tired of Instagram's algorithm deciding what you watch next? Me too. This is my 
 - **Satisfying Like Button:** Smash that like button to see the heart turn red. Instant gratification guaranteed.
 - **Modern Share Functionality:** Uses the Web Share API on mobile for easy sharing and copies the site link to your clipboard on desktop.
 - **My Kingdom, My Rules:** The content is 100% controlled by me via a simple `videos.txt` file. No algorithm can touch this.
-- **Linked Socials:** The icons and username link directly to my other corners of the internet.
+- **Download Function:** You can download your favourite reel.
 
 ---
 
