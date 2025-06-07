@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let userInteracted = false;
     let touchStartY = 0;
 
-    // Home button reloads the page
     homeBtn.addEventListener('click', () => {
         window.location.reload();
     });
@@ -59,13 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
         video.muted = true;
         video.playsInline = true;
         
-        // Use prompt for first interaction, then manage sound
         const interactionHandler = () => {
             if (!userInteracted) {
                 userInteracted = true;
                 unmutePrompt.classList.add('hidden');
                 document.querySelectorAll('video').forEach(v => { v.muted = false; });
-                video.muted = false; // Ensure the first clicked video is unmuted
+                video.muted = false;
             } else {
                 video.muted = !video.muted;
             }
@@ -80,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return reel;
     }
     
+    // CHANGED: createOverlay function updated with Download button
     function createOverlay(fileName) {
         const overlay = document.createElement('div');
         overlay.className = 'reel-overlay';
@@ -96,18 +95,25 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="reel-actions">
                 <div class="action-item like-btn"><i class="fa-regular fa-heart"></i><span>6.9M</span></div>
-                <div class="action-item comment-icon"><i class="fa-solid fa-comment-dots"></i><span>345K</span></div>
+                <div class="action-item download-btn"><i class="fa-solid fa-download"></i><span>Save</span></div>
                 <div class="action-item share-btn"><i class="fa-solid fa-paper-plane"></i><span class="share-text">Share</span></div>
             </div>
         `;
 
         const likeBtn = overlay.querySelector('.like-btn');
         likeBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent reel click event
+            e.stopPropagation();
             const heartIcon = likeBtn.querySelector('i');
-            heartIcon.classList.toggle('fa-regular'); // Switch between regular and solid
+            heartIcon.classList.toggle('fa-regular');
             heartIcon.classList.toggle('fa-solid');
-            heartIcon.classList.toggle('liked'); // Add red color
+            heartIcon.classList.toggle('liked');
+        });
+
+        // Add event listener for the new download button
+        const downloadBtn = overlay.querySelector('.download-btn');
+        downloadBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            forceDownload(`./reels/${fileName}`, fileName);
         });
 
         const shareBtn = overlay.querySelector('.share-btn');
@@ -182,10 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     async function shareReel(button) {
         const shareText = button.querySelector('.share-text');
-        // Use hardcoded link as requested
         const shareUrl = 'https://msrofficial.github.io/slaygirls';
         const shareData = { title: 'Check out this Reel!', text: 'Yohohoho 🌚', url: shareUrl };
-
         if (navigator.share) {
             try { await navigator.share(shareData); } catch (err) { console.error("Share failed:", err); }
         } else {
@@ -196,6 +200,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => { shareText.textContent = originalText; }, 2000);
             } catch (err) { console.error('Failed to copy link:', err); }
         }
+    }
+    // forceDownload function is needed again
+    function forceDownload(url, fileName) {
+        fetch(url).then(response => response.blob()).then(blob => {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            link.remove();
+        }).catch(console.error);
     }
     function showVolumeIcon(video) {
         let volumeIcon = video.parentElement.querySelector('.volume-icon');
