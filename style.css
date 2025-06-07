@@ -5,23 +5,20 @@
     box-sizing: border-box;
 }
 
-body {
+/* CHANGED: Fullscreen body */
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: #000;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
 }
 
+/* CHANGED: App container takes full screen */
 .app-container {
-    height: 100vh;
+    height: 100%;
     width: 100%;
-    max-width: 450px; /* Typical phone width */
     background-color: #000;
-    border-radius: 10px; /* Optional: for desktop view */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -38,18 +35,15 @@ body {
     align-items: center;
     padding: 15px;
     z-index: 10;
+    color: #fff;
 }
-.reels-header { 
-    top: 0; 
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0)); 
+.reels-header a, .reels-footer a {
+    color: #fff; /* Ensure icons inside links are white */
+    text-decoration: none;
 }
-.reels-header h1 { 
-    font-size: 22px; 
-}
-.reels-header i, .reels-footer i { 
-    font-size: 24px; 
-    cursor: pointer; 
-}
+.reels-header { top: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0)); }
+.reels-header h1 { font-size: 22px; }
+.reels-header i, .reels-footer i { font-size: 24px; cursor: pointer; }
 .reels-footer {
     bottom: 0;
     background: #000;
@@ -61,7 +55,7 @@ body {
 .reels-container {
     flex-grow: 1;
     height: 100%;
-    overflow: hidden; /* We control scroll with JS */
+    overflow: hidden;
     position: relative;
 }
 
@@ -72,32 +66,18 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0; /* Initially hidden */
+    opacity: 0;
     transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
-
-.reel.active {
-    transform: translateY(0);
-    opacity: 1;
-    z-index: 2;
-}
-
-.reel.next {
-    transform: translateY(100%);
-    opacity: 1;
-}
-
-.reel.prev {
-    transform: translateY(-100%);
-    opacity: 1;
-}
+.reel.active { transform: translateY(0); opacity: 1; z-index: 2; }
+.reel.next { transform: translateY(100%); opacity: 1; }
+.reel.prev { transform: translateY(-100%); opacity: 1; }
 
 .reel video {
     width: 100%;
     height: 100%;
-    /* Ensures full video is visible, with black bars if needed */
     object-fit: contain; 
-    background-color: #000; /* Background for the letter/pillar-boxing */
+    background-color: #000;
 }
 
 /* UI Overlay on Video */
@@ -111,13 +91,9 @@ body {
     align-items: flex-end;
     z-index: 5;
     background: linear-gradient(to top, rgba(0,0,0,0.4), rgba(0,0,0,0));
-    padding-bottom: 70px; /* Space for footer */
+    padding-bottom: 70px;
 }
-
-.reel-info {
-    flex-grow: 1;
-    color: #fff;
-}
+.reel-info { flex-grow: 1; color: #fff; }
 .reel-info .username {
     display: flex;
     align-items: center;
@@ -125,95 +101,47 @@ body {
     font-size: 16px;
     margin-bottom: 5px;
 }
-.reel-info .username img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: 1px solid #fff;
-    margin-right: 8px;
+.reel-info .username a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
-.reel-info .caption {
-    font-size: 14px;
-    line-height: 1.3;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-}
+.reel-info .username img { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #fff; margin-right: 8px; }
+.reel-info .caption { font-size: 14px; line-height: 1.3; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
 
-.reel-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px; /* Space between icons */
-}
-.reel-actions .action-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-}
-.reel-actions .action-item i {
-    font-size: 28px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
-.reel-actions .action-item span {
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 5px;
-}
+.reel-actions { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+.reel-actions .action-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.reel-actions .action-item i { font-size: 28px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+.reel-actions .action-item span { font-size: 12px; font-weight: bold; margin-top: 5px; }
+.reel-actions .action-item .fa-heart.liked { color: #fe2c55; /* Red color for liked heart */ }
+.reel-actions .comment-icon { pointer-events: none; opacity: 0.6; } /* Make comment icon unclickable */
+.disabled-icon { cursor: not-allowed; pointer-events: none; opacity: 0.6; } /* For footer icons */
 
 /* Temporary Volume control icon on click */
-.volume-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 40px;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none; /* Don't block clicks on video */
-}
+.volume-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 40px; background-color: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 50%; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
 
-/* Styles for the Initial Unmute Prompt */
+/* Styles for the Unmute Prompt */
 .unmute-prompt {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 20;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 15px 25px;
-    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    text-align: center;
+    gap: 15px;
     cursor: pointer;
-    animation: pulse 1.5s infinite;
 }
+.unmute-prompt p { font-size: 14px; line-height: 1.5; }
+.unmute-prompt .tap-sound { font-weight: bold; font-size: 16px; animation: pulse 1.5s infinite; }
+.unmute-prompt.hidden { display: none; }
 
-.unmute-prompt i {
-    font-size: 24px;
-}
-
-.unmute-prompt p {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.unmute-prompt.hidden {
-    display: none;
-}
-
-@keyframes pulse {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.05);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
