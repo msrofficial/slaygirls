@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const oldReels = (direction === 'down') ? document.querySelectorAll('.reel.prev') : document.querySelectorAll('.reel.next');
             oldReels.forEach(r => { if (r !== activeReel) r.remove(); });
             isScrolling = false;
-        }, 300);
+        }, 50);
     }
     function playActiveVideo() {
         if (!activeReel) return;
