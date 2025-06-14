@@ -3,38 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My SlayGirls...!</title>
+    <title>SlayGirls</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-    <link rel="icon" href="icons8-anime-48.png" type="image/png">
 </head>
 <body>
     <div class="app-container">
         <header class="reels-header">
             <h1>Reels</h1>
-            <i class="fa-solid fa-camera"></i>
+            <div class="header-menu">
+                <div class="click-prompt" id="click-prompt">
+                    <span>Click Me</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="hamburger-icon" id="hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </header>
 
-        <div class="reels-container" id="reels-container">
+        <nav class="nav-panel" id="nav-panel">
+            <div class="nav-header">
+                <h3>Menu</h3>
+                <i class="fa-solid fa-xmark" id="close-icon"></i>
             </div>
+            <ul>
+                <li>
+                    <div class="nav-item about-section">
+                        <strong>About This Project</strong>
+                        <p>A fun project to watch curated reels without any algorithm. Made with ❤️ by MSR Sakibur.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="nav-item auto-scroll-toggle">
+                        <span>Auto Scroll</span>
+                        <label class="switch">
+                            <input type="checkbox" id="auto-scroll-checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </li>
+                <li><a href="https://github.com/msrofficial" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="https://facebook.com/sakibur.msr" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i> Facebook</a></li>
+                <li><a href="https://instagram.com/msr.sakibur" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="https://msrsakibur.netlify.app" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-globe"></i> Website</a></li>
+                <li><a href="https://www.youtube.com/@msr.sakibur" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> YouTube</a></li>
+            </ul>
+        </nav>
+        <div class="nav-overlay" id="nav-overlay"></div>
+
+        <div class="reels-container" id="reels-container"></div>
         
         <div class="unmute-prompt" id="unmute-prompt">
             <p><strong>Disclaimer:</strong> Don't judge the developer's character by this website. This was made just for fun and practice.</p>
-            <p class="tap-sound">Tap to turn on sound <i class="fa-solid fa-volume-high"></i></p>
+            <p class="tap-sound">Tap anywhere to enable sound <i class="fa-solid fa-volume-high"></i></p>
         </div>
 
         <footer class="reels-footer">
             <i class="fa-solid fa-house" id="home-btn"></i>
-            <a href="https://github.com/msrofficial" target="_blank" rel="noopener noreferrer">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </a>
+            <a href="https://github.com/msrofficial" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-magnifying-glass"></i></a>
             <i class="fa-solid fa-plus-square disabled-icon"></i>
             <i class="fa-solid fa-heart disabled-icon"></i>
-            <a href="https://facebook.com/sakibur.msr" target="_blank" rel="noopener noreferrer">
-                <i class="fa-solid fa-user"></i>
-            </a>
+            <a href="https://facebook.com/sakibur.msr" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-user"></i></a>
         </footer>
     </div>
     <script src="script.js"></script>
 </body>
-</html>
+    </html>
+    
